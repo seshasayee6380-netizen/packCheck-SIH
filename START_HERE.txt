@@ -1,0 +1,76 @@
+PACKCHECK AI — SIH 2026 FINAL INTEGRATED BUILD
+================================================
+
+THIS FOLDER ALREADY CONTAINS THE WORKING PACKCHECK PROJECT.
+The active backend is backend/main.py. The supplied main_improved.py is included as a reference and merged-guide artifact; do NOT replace backend/main.py with it, because the active main.py contains the full SIH feature set (passport, complaints, fraud, evidence chain, offline inspection, etc.).
+
+WINDOWS QUICK START
+-------------------
+1. Extract this ZIP.
+2. Open the extracted folder.
+3. Double-click SETUP_AND_RUN.bat.
+4. Keep both terminal windows open.
+5. Open http://localhost:5173
+
+If the project was already installed before, SETUP_AND_RUN.bat is enough.
+
+OCR SETUP
+---------
+The project supports:
+  - PaddleOCR 3.3.2 (primary when installed)
+  - Tesseract (fallback / cross-check)
+
+Recommended current OCR installation:
+  backend\\requirements-paddleocr.txt
+
+Run:
+  INSTALL_PADDLE_OCR.bat
+
+Do NOT use the older requirements-enhanced.txt as the authoritative installer: it is included because it was supplied as an OCR-fix reference, but it pins an older PaddleOCR 2.7 package that does not match the active PaddleOCR 3.x integration in this project.
+
+MANUAL START
+------------
+Backend terminal:
+  cd backend
+  python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
+
+Frontend terminal:
+  cd frontend
+  npm install
+  npm run dev -- --host 0.0.0.0
+
+Open:
+  http://localhost:5173
+
+PHONE DEMO
+----------
+1. Connect the phone and PC to the same Wi-Fi.
+2. Run ipconfig on the PC.
+3. Find the IPv4 address, for example 192.168.1.24.
+4. On the phone open http://192.168.1.24:5173
+5. Generate a verified product passport in PackCheck.
+6. Scan the generated QR with the phone camera.
+
+The QR should open the mobile Product Passport page, not raw JSON.
+
+WHAT TO TEST BEFORE SIH
+-----------------------
+[ ] Dashboard loads
+[ ] Backend status is Online
+[ ] Scan Product uploads an image
+[ ] OCR extracts declarations
+[ ] Applicability Engine identifies applicable rules
+[ ] Compliance result is generated
+[ ] Evidence Chain is populated from the actual inspection
+[ ] Human verification updates the inspection
+[ ] Compliance fingerprint changes when verified data changes
+[ ] MRP & Quantity Fraud Detector works
+[ ] Complaint Center creates a reference number
+[ ] Product Passport is generated from the selected inspection
+[ ] Passport QR opens on a phone on the same Wi-Fi
+[ ] Offline Inspection queues data and later syncs
+[ ] Sidebar hides/shows and scrolls
+
+IMPORTANT
+---------
+OCR cannot be guaranteed to read every package photograph perfectly. For SIH, use clear, high-resolution package photos and capture multiple surfaces when available. If evidence is uncertain, the system should prefer review/recapture rather than treating OCR uncertainty as automatic guilt.
